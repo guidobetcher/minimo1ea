@@ -22,7 +22,7 @@
             "in": "path",
             "name": "id",
             "required": true,
-            "description": "Cat with id",
+            "description": "User with id",
             "schema": {
               "$ref": "#/definitions/id"
             }
