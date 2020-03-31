@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import {initiateDB} from './database' //importamos la funcion para init DB
 import router from './routes/routes';
+import swagger from 'swagger-ui-express';
+//import * as swaggerDocument from './swagger.json';
 
 //Importando Rutas
 
@@ -33,11 +35,21 @@ app.use(express.urlencoded({extended: false}));//Cuando un form de html me llegu
 
 //Archivos estaticos
 
+//Swagger
+
+
 //DataBase
 initiateDB();
 
 //Inicialización del Servidor
 app.listen(port,function(){
-    console.log('Server Listening on port: '+port)
+    console.log('Server Listening on port: '+port);
+    //app.use("/swagger", swagger.serve, swagger.setup(swaggerDocument));
+    var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 }
 );
+
+

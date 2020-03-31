@@ -2,7 +2,7 @@ import { Request, Response, json } from 'express';
 import User from '../models/User';
 
 function getUserById(req:Request,res:Response){
-    const idUser =  req.body.idUser || '';	;
+    let idUser =  req.body.idUser || '';	;
 
     //We find the user
     User.findOne(({_id: idUser}),(err,doc)=>{
