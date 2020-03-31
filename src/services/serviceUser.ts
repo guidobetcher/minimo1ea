@@ -1,11 +1,12 @@
 import { Request, Response, json } from 'express';
 import User from '../models/User';
+import {Schema, model} from 'mongoose'
 
 function getUserById(req:Request,res:Response){
-    let idUser =  req.body.idUser || '';	;
-
+    const idUser  =  req.query.idUser || '';	
+    console.log('Searching user by Id...');
     //We find the user
-    User.findOne(({_id: idUser}),(err,doc)=>{
+    User.findById(idUser,(err,doc)=>{
         if(!err)
        {
            console.log(doc);
