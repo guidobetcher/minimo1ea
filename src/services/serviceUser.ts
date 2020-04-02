@@ -18,17 +18,46 @@ function getUserById(req:Request,res:Response){
        }
     });
 }
-function addUser(req:Request, res:Response){
+//Register new user into the database
+async function addUser(req:Request, res:Response){
+    const email = req.body.email;
+    let existUser = await User.findOne({email: email});
+    if(existUser){
+        res.status(409).json({message:"Already exist a user w/ this email"});
+    }
+    else{
     console.log('Adding User');
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    const newUser = new User({firstname,lastname});
+    let {firstname,lastname,email,phoneNumber,idPiso,password}= req.body; //Parsing everything 
+    const newUser = new User({firstname,lastname,email,phoneNumber,idPiso,password});
     newUser.save().then((data)=>{
         res.status(201).json(data);
     }).catch((err)=>{
         res.status(500).json(err);
-    })
-
+    })   
+    }
 }
 
 export default{getUserById,addUser};
+
+//PROMISE FUNCTION
+// function existUser(emailUser:String):Promise<Boolean>{
+
+//     console.log(emailUser);
+//     var answer:Promise<Boolean> = new Promise<Boolean> ((resolve,reject)=>{
+//         User.findOne(({email : emailUser}),(err,doc)=>{
+//             if(!err)
+//            {
+//                if(doc == null){
+//                    console.log(doc);
+//                    resolve(false)
+//                }
+//                else{
+//                console.log('EXIST')
+//                console.log(''+doc);
+//                resolve(true); 
+//                } 
+//            }
+//         });
+//     });
+//     return answer ;
+// }
