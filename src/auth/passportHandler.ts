@@ -1,10 +1,8 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-// import passportApiKey from "passport-headerapikey";
 import passportJwt from "passport-jwt";
 import User from "../models/User";
 import { JWT_SECRET } from "../util/secrets";
-
 
 const LocalStrategy = passportLocal.Strategy;
 const JwtStrategy = passportJwt.Strategy;
@@ -12,6 +10,7 @@ const ExtractJwt = passportJwt.ExtractJwt;
 
 passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
     User.findOne({ email: email.toLowerCase() }, (err, user: any) => {
+        console.log("In the LocalStrategy");
         if (err) { return done(err); }
         if (!user) {
             return done(undefined, false, { message: `email ${email} not found.` });

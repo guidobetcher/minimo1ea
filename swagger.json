@@ -40,6 +40,44 @@
           }
         }
       }
+    },"/user/login": {
+      "post": {
+        "tags": [
+          "User Login"
+        ],
+        "summary": "Login with an existing User email and password.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "email",
+            "required": true,
+            "description": "email",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "password",
+            "required": true,
+            "description": "User password",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Failed. User not found."
+          }
+        }
+      }
     },
     "/user/addUser": {
       "post": {
@@ -47,19 +85,61 @@
           "Users"
         ],
         "summary": "Create a new user in system",
-        "requestBody": {
-          "description": "User Object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
+        "parameters": [
+          {
+            "in": "body",
+            "name": "firstname",
+            "required": true,
+            "description": "Name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "lastname",
+            "required": true,
+            "description": "lastname",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "email",
+            "required": true,
+            "description": "email",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "phoneNumber",
+            "required": false,
+            "description": "phoneNumber",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "idPiso",
+            "required": false,
+            "description": "idPiso",
+            "schema": {
+              "$ref": "#/definitions/id"
+            }
+          },
+          {
+            "in": "body",
+            "name": "password",
+            "required": true,
+            "description": "password",
+            "schema": {
+              "type": "string"
             }
           }
-        },
-        "produces": [
-          "application/json"
         ],
         "responses": {
           "200": {
@@ -78,7 +158,7 @@
   "definitions": {
     "id": {
       "properties": {
-        "uuid": {
+        "_id": {
           "type": "string"
         }
       }
