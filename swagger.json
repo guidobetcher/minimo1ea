@@ -16,7 +16,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Get the user by the id",
+        "summary": "Get user with given ID",
         "parameters": [
           {
             "in": "path",
@@ -34,6 +34,9 @@
             "schema": {
               "$ref": "#/definitions/User"
             }
+          },
+          "404": {
+            "description": "Failed. Cat not found."
           }
         }
       }
