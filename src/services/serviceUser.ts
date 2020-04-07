@@ -2,12 +2,13 @@ import {Request, Response, json, NextFunction} from 'express';
 import User from '../models/User';
 import * as jwt from "jsonwebtoken";
 import passport from "passport";
-//import {LocalStrategy} from "../auth/passportHandler";
 import {JWT_SECRET} from "../util/secrets";
-import {Schema, model} from 'mongoose'
+import "../auth/passportHandler";
+import * as Path from "path";
+
 
 function getUserById(req:Request,res:Response){
-    const idUser  =  req.query.idUser || '';	
+    const idUser  =  req.query.idUser || '';
     console.log('Searching user by Id...');
     //We find the user
     User.findById(idUser,(err,doc)=>{
@@ -43,37 +44,35 @@ async function addUser(req:Request, res:Response){
     }
 }
 
+//function userLogin(req:Request,res:Response,next:NextFunction) {
+//    console.log('Logging in');
+    // if(!req.body.email || !req.body.password){
+    //     return res.status(400).json({'msg':'You need to send email and password'});
+    // }
+    //
+    // User.findOne({email: req.body.email}, (err,user:any)=>{
+    //     if(err){
+    //         return res.status(400).json({'msg': err});
+    //     }
+    //     if(!user){
+    //         return res.status(400).json({'msg': 'The user does not exists'});
+    //     }
+    //
+    //     if (req.body.password===user.password) {
+    //         console.log('Logged in successfully');
+    //         return res.status(200).json({
+    //             token: jwt.sign({email: user.email}, JWT_SECRET, {expiresIn: 60})
+    //         })
+    //     } else {
+    //         return res.status(400).json({'msg': 'The email and password don\'t match.'});
+    //     }
+    // })
+
+
 function userLogin(req:Request,res:Response,next:NextFunction) {
     console.log('Logging in');
-    if(!req.body.email || !req.body.password){
-        return res.status(400).json({'msg':'You need to send email and password'});
-    }
-
-    User.findOne({email: req.body.email}, (err,user:any)=>{
-        if(err){
-            return res.status(400).json({'msg': err});
-        }
-        if(!user){
-            return res.status(400).json({'msg': 'The user does not exists'});
-        }
-
-        user.comparePassword(req.body.password, (err: Error, isMatch: boolean) => {
-            if(isMatch && !err){
-                console.log('Logged in successfully');
-                return res.status(200).json({
-                    token: jwt.sign({email: user.email}, JWT_SECRET, {expiresIn: 60})
-                })
-            }
-            else{
-                return res.status(400).json({'msg': 'The email and password don\'t match.'});
-            }
-        })
-
-    })
-    /*function userLogin(req:Request,res:Response,next:NextFunction) {
-    console.log('Logging in');
     passport.authenticate("local", function (err, user, info) {
-        console.log("in authenticate")
+        console.log("in authenticate");
         // no async/await because passport works only with callback ..
         if (err) return next(err);
         if (!user) {
@@ -82,7 +81,7 @@ function userLogin(req:Request,res:Response,next:NextFunction) {
             const token = jwt.sign({ email: user.email }, JWT_SECRET);
             res.status(200).send({ token: token });
         }
-    });*/
+    });
 }
 
 export default{getUserById,addUser,userLogin};

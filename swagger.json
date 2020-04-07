@@ -19,7 +19,7 @@
         "summary": "Get user with given ID",
         "parameters": [
           {
-            "in": "path",
+            "in": "body",
             "name": "id",
             "required": true,
             "description": "User with id",

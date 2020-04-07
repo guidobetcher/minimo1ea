@@ -9,6 +9,8 @@ import {initiateDB} from './database' //importamos la funcion para init DB
 import router from './routes/routes';
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from '../swagger.json';
+import passport from "passport";
+import User from "./models/User";
 
 //Importando Rutas
 
@@ -24,19 +26,38 @@ app.use( '', router );
 app.use( bodyParser.json() );
 
 //Middlewares
+
 app.use(express.json()); //Para entender los JSON que me llegaran
 app.use(express.urlencoded({extended: false}));//Cuando un form de html me llegue pueda interpretarlo
+app.use(passport.initialize()); //
 
 //Rutas (definimo el path y luego indicamos la variable que importamos del folder Routes)
 
-
+// passport config
+// passport.use(new passportLocal.Strategy({
+//         usernameField: 'email'
+//     },
+//     function(username, password, done) {
+//         console.log('In Local Strategy')
+//         User.findOne({ email: username }, function(err, user:any) {
+//             if (err) { return done(err); }
+//             if (!user) {
+//                 return done(null, false, { message: 'Incorrect email.' });
+//             }
+//             user.comparePassword(password, (err: Error, isMatch: boolean) => {
+//                 if (err) { return done(err); }
+//                 if (isMatch) {
+//                     return done(undefined, user);
+//                 }
+//                 return done(undefined, false, { message: "Invalid username or password." });
+//             });
+//         });
+//     }
+// ));
 
 //Aqui utilizamos .use porque tendremos varias rutas
 
 //Archivos estaticos
-
-//Swagger
-
 
 //DataBase
 initiateDB();
