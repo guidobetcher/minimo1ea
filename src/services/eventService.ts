@@ -28,14 +28,13 @@ async function getEvents(req:Request,res:Response) {
 }
 
 async function updateEvent(req:Request,res:Response) {
-//     console.log("UPDATE EVENT");
-//     let {name,description,date}= req.body; //Parsing everything
-//     const updatedEvent = req.body;
-//     await updatedEvent.save().then((data)=> {
-//         res.status(201).json(data);
-//     }).catch((err)=> {
-//         res.status(500).json(err);
-//     })
+    console.log("UPDATE EVENT");
+    // const updatedEvent = req.body;
+    // await updatedEvent.save().then((data)=> {
+    //     res.status(201).json(data);
+    // }).catch((err)=> {
+    //     res.status(500).json(err);
+    // })
 }
 
 
